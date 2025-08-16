@@ -1,5 +1,5 @@
 import React from "react";
-import { BadgeInfo, PlayCircle, Lock, BookOpen, BarChart } from "lucide-react";
+import { BadgeInfo, PlayCircle, Lock } from "lucide-react";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import BuyCourseButton from "@/components/BuyCourseButton";
@@ -73,7 +73,11 @@ const CourseDetail = () => {
                         </CardHeader>
                         <CardContent className="space-y-1">
                             {course.lectures.map((lecture, idx) => (
-                                <div key={idx} className="flex items-center justify-between p-3 border-b dark:border-gray-700 last:border-b-0">
+                                <div
+                                    key={idx}
+                                    className={`flex items-center justify-between p-3 border-b dark:border-gray-700 last:border-b-0 ${isPurchased ? 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700' : ''}`}
+                                    onClick={() => isPurchased && navigate(`/course-progress/${courseId}`)}
+                                >
                                     <div className="flex items-center gap-3">
                                         <span>
                                             {isPurchased || lecture.isPreview ? (
