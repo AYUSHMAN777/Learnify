@@ -13,7 +13,7 @@ import { Loader2, Trash2 } from 'lucide-react';
 
 function LectureTab() {
     const navigate = useNavigate();
-    const MEDIA_API = 'http://localhost:5000/api/media';
+    const MEDIA_API = 'https://learnify-1-sb4f.onrender.com/api/media';
 
     const [lectureTitle, setLectureTitle] = useState('');
     const [uploadVideoInfo, setUploadVideoInfo] = useState(null);
