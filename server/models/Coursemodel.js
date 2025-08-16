@@ -22,21 +22,21 @@ const courseSchema = new Schema(
     },
     category: {
       type: String,
-      required: true,
+      // required: true,
     },
     courseLevel: {
       type: String,
       enum: ['beginner', 'intermediate', 'advanced'],
-      required: true,
+      // required: true,
     },
     coursePrice: {
       type: Number,
-      required: true,
+      // required: true,
       min: 0,
     },
     courseThumbnail: {
       type: String, // e.g., Cloudinary URL or local path
-      required: true,
+      // required: true,
     },
 
     // Relationships
