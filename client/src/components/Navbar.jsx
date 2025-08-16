@@ -52,7 +52,7 @@ function Navbar() {
                 <Link to="/">
                     <div className='flex items-center gap-2'>
                         <School size={"30"} className="text-blue-600" />
-                        <h1 className='text-2xl font-extrabold hidden md:block text-gray-800 dark:text-white'>E-Learning</h1>
+                        <h1 className='text-2xl font-extrabold hidden md:block text-gray-800 dark:text-white'>Learnify</h1>
                     </div>
                 </Link>
                 <div className='flex items-center gap-5'>
@@ -87,7 +87,7 @@ function Navbar() {
             </div>
             {/* Mobile Navbar */}
             <div className=' md:hidden flex justify-between items-center h-full px-4'>
-                <Link to='/' className='font-extrabold text-2xl'>E-Learning</Link>
+                <Link to='/' className='font-extrabold text-2xl'>Learnify</Link>
                 <MobileNavbar user={user} />
             </div>
         </div>
@@ -116,7 +116,7 @@ function MobileNavbar({ user }) {
                 {/* Top Section */}
                 <div>
                     <div className="flex flex-col gap-2 px-4 pt-4 pb-2 border-b dark:border-gray-800">
-                        <h1 className="font-extrabold text-2xl" onClick={() => navigate("/")} cursor-pointer>E-Learning</h1>
+                        <h1 className="font-extrabold text-2xl" onClick={() => navigate("/")} cursor-pointer>Learnify</h1>
                         <DarkMode />
                     </div>
                     {/* Menu Items */}

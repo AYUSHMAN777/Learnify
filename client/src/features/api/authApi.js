@@ -8,12 +8,20 @@ export const authApi = createApi({//createApi set up connection to your backend 
         credentials: 'include'
     }),
     endpoints: (builder) => ({
-        registerUser: builder.mutation({
+          registerUser: builder.mutation({
             query: (inputData) => ({
                 url: 'register',
                 method: 'POST',
                 body: inputData,
             }),
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                try {
+                    const result = await queryFulfilled;
+                    dispatch(userLoggedIn({ user: result.data.user }));
+                } catch (error) {
+                    console.log('Registration failed:', error);
+                }
+            },
         }),
 
         //A mutation in RTK Query is for creating, updating, or deleting data (anything that modifies data on the server).
