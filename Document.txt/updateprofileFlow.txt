@@ -1,0 +1,85 @@
+Ek Line Me Flow:
+React Form (FormData) → RTK Query (PUT request) → Express Route (multer + auth) → Controller (photo delete, nayi upload, user update) → Cloudinary (photo store) → Response
+
+Har Code Ka Kaam:
+MyProfile.jsx: User input leta hai, FormData banata hai, API call karta hai.
+authApi.js: API call ko backend tak bhejta hai.
+user.route.js: Route pe authentication aur file upload middleware lagata hai.
+user.controller.js: User data update karta hai, photo Cloudinary pe upload karta hai.
+cloudinary.js: File ko Cloudinary pe upload karta hai.
+
+----------------------------------------
+Sample Code for Each Step:
+----------------------------------------
+
+// 1. MyProfile.jsx (Frontend)
+const updateUserhandler = async () => {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('profilephoto', photoUrl); // photoUrl is the file object
+    await updateUser(formData); // RTK Query mutation
+};
+
+// 2. authApi.js (RTK Query)
+updateUser: builder.mutation({
+    query: (formData) => ({
+        url: 'profileupdate',
+        method: 'PUT',
+        body: formData,
+        credentials: 'include',
+    })
+})
+
+// 3. user.route.js (Express Route)
+const upload = require('../utils/multer');
+router.put('/profileupdate', isAuthenticated, upload.single('profilephoto'), updateProfile);
+
+// 4. user.controller.js (Controller)
+const updateProfile = async (req, res) => {
+    const userId = req.id;
+    const { name } = req.body;
+    const profilephoto = req.file;
+
+    const user = await User.findById(userId);
+    if (user.photoUrl) {
+        const publicId = user.photoUrl.split('/').pop().split('.')[0];
+        deleteMediafromcloudinary(publicId);
+    }
+    const cloudinaryResponse = await uploadMedia(profilephoto.path);
+    const photoUrl = cloudinaryResponse.secure_url;
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { name, photoUrl },
+        { new: true }
+    ).select('-password');
+
+    return res.status(200).json({
+        user: updatedUser,
+        message: 'Profile updated successfully.',
+        success: true,
+    });
+};
+
+// 5. cloudinary.js (Cloudinary Utility)
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: process.env.Cloudinary_CLOUD_NAME,
+    api_key: process.env.Cloudinary_API_KEY,
+    api_secret: process.env.Cloudinary_API_SECRET,
+});
+
+const uploadMedia = async (file) => {
+    try {
+        const uploadResponse = await cloudinary.uploader.upload(file, {
+            resource_type: "auto"
+        });
+        return uploadResponse;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+module.exports = {
+    uploadMedia,
+};

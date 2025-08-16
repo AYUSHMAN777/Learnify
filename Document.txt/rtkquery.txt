@@ -1,0 +1,43 @@
+What is RTK Query?
+RTK Query is a powerful data fetching and caching tool built into Redux Toolkit.
+It helps you easily connect your frontend (React) to your backend (API), manage loading/error states, and keep your UI in sync with your server.
+
+How does RTK Query integrate your backend and frontend?
+You define an API slice (in your case, authApi.js) using createApi.
+You describe endpoints (like registerUser and loginUser) that map to your backend routes.
+RTK Query auto-generates React hooks (like useRegisterUserMutation) for you to use in your components.
+When you call these hooks in your components, RTK Query sends HTTP requests to your backend, manages loading/error states, and gives you the response data.
+
+How is it working in your code?
+1. API Slice (authApi.js)
+What’s happening here?
+createApi sets up a connection to your backend at http://localhost:5000/api/user/.
+registerUser and loginUser are mutations (for POST requests).
+For each endpoint, you define how to make the request (url, method, body).
+RTK Query generates hooks: useRegisterUserMutation and useLoginUserMutation.
+
+2. Store Setup (store.js and rootReducer.js)
+You add authApi.reducer to your Redux store so RTK Query can manage its cache and state.
+You add authApi.middleware so RTK Query can handle requests and responses.
+
+3. Using the Hooks in Your Component (Login.jsx)
+Key parts:
+When you call registerUser(data) or LoginUser(data), RTK Query sends a POST request to your backend.
+The isLoading flags let you show loading spinners or disable buttons while waiting for a response.
+On successful login, your onQueryStarted dispatches userLoggedIn to update your Redux state.
+
+How does this connect frontend and backend?
+Frontend calls the RTK Query hook (e.g., registerUser).
+RTK Query sends the request to your backend (/api/user/register or /api/user/login).
+Backend processes the request and sends a response.
+RTK Query gives you the response data and updates Redux state.
+Your UI updates automatically based on the new state.
+
+
+Summary Table
+Layer	Your File(s)	What it Does
+API Slice	authApi.js	Defines endpoints, generates hooks, manages requests
+Redux Store	store.js, rootReducer.js	Integrates RTK Query and your auth slice
+Auth Slice	authslice.js	Stores user/auth state, updates on login/logout
+Component	Login.jsx	Uses hooks to trigger API calls and update UI
+Backend	Express API	Handles /register and /login requests

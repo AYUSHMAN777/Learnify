@@ -1,0 +1,91 @@
+1. Frontend se File Upload
+User frontend par form fill karta hai aur image/file select karta hai.
+Form ka enctype="multipart/form-data" hota hai.
+File input ka naam (for example) "profilephoto" hota hai.
+
+Example HTML:
+<form method="POST" action="/api/user/profile" enctype="multipart/form-data">
+  <input type="file" name="profilephoto" />
+  <button type="submit">Upload</button>
+</form>
+
+2. Backend Route me Multer Middleware
+Express route me multer middleware lagate hain, jo file ko parse karta hai aur server par temporarily save kar deta hai.
+Yahan 'profilephoto' wahi naam hai jo frontend ke input me diya tha.
+
+Example Express Route:
+const express = require('express');
+const router = express.Router();
+const upload = require('../utils/multer');
+const { updateProfile } = require('../controllers/user.controller');
+
+router.put('/profile', upload.single('profilephoto'), updateProfile);
+
+module.exports = router;
+
+3. Controller me File Access
+Multer middleware file ko req.file me daal deta hai.
+Aap controller me req.file se file ka path nikal sakte hain:
+
+Example Controller:
+const { uploadMedia } = require('../utils/cloudinary');
+
+const updateProfile = async (req, res) => {
+    try {
+        const userId = req.id;
+        const { name } = req.body;
+        const profilephoto = req.file;
+
+        // Cloudinary me upload
+        const cloudinaryResponse = await uploadMedia(profilephoto.path);
+        const photoUrl = cloudinaryResponse.secure_url;
+
+        // Update user
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { name, photoUrl },
+            { new: true }
+        ).select('-password');
+
+        return res.status(200).json({
+            user: updatedUser,
+            message: 'Profile updated successfully.',
+            success: true,
+        });
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error during profile update.' });
+    }
+};
+
+4. Cloudinary me Upload
+Ab aap uploadMedia(profilephoto.path) call karte hain:
+uploadMedia function me file argument actually file ka path hota hai, jo multer ne diya.
+
+Example Cloudinary Utility:
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: process.env.Cloudinary_CLOUD_NAME,
+    api_key: process.env.Cloudinary_API_KEY,
+    api_secret: process.env.Cloudinary_API_SECRET,
+});
+
+const uploadMedia = async (file) => {
+    try {
+        const uploadResponse = await cloudinary.uploader.upload(file, {
+            resource_type: "auto"
+        });
+        return uploadResponse;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+module.exports = { uploadMedia };
+
+Summary Flow
+Frontend: User file select karta hai aur form submit karta hai.
+Express Route: Multer middleware file ko parse karta hai aur req.file me daal deta hai.
+Controller: req.file.path ko uploadMedia function me bhejte hain.
+Cloudinary: File path se image/video Cloudinary par upload ho jata hai.
+
+Agar koi specific step ya code chahiye ho toh batao!

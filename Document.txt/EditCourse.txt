@@ -1,0 +1,33 @@
+Edit Course Flow (React + RTK Query + Express Backend)
+Frontend (React):
+
+User edits course fields in a form (CourseTab.jsx).
+On submit, a FormData object is created with all fields (including file/image).
+RTK Query mutation (useEditCourseMutation) sends a PUT request to the backend with FormData.
+API Layer (RTK Query):
+
+Mutation defined in courseApi.js sends PUT /api/course/:courseId with FormData.
+Handles response and updates mutation state (isLoading, isSuccess, error, data).
+Backend (Express):
+
+Route: router.put('/:courseId', isAuthenticated, upload.single('courseThumbnail'), editCourse);
+Controller (editCourse):
+Receives data and file.
+Deletes old thumbnail from Cloudinary if present.
+Uploads new thumbnail to Cloudinary.
+Updates course fields in DB.
+Sends updated course data as response.
+Frontend Response Handling:
+
+On success/error, shows toast notification.
+UI updates (redirect, refetch, etc.) based on mutation state.
+Summary Table:
+
+Step	File/Layer	Role/Action
+Form submit	CourseTab.jsx	FormData creation, mutation call
+API mutation	courseApi.js	PUT request to backend
+Route	course.route.js	Handles PUT, file upload
+Controller	course.controller.js	Cloudinary, DB update, response
+Response	React/RTK Query	Toast, UI update
+Tip:
+Use FormData for file uploads, handle mutation state for UI feedback, and always clean up old files in backend when updating images.

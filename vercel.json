@@ -1,0 +1,26 @@
+// {
+//   "version": 2,
+//   "builds": [
+//     {
+//       "src": "server/Index.js",
+//       "use": "@vercel/node"
+//     },
+//     {
+//       "src": "client/vite.config.js",
+//       "use": "@vercel/static-build",
+//       "options": {
+//         "distDir": "dist"
+//       }
+//     }
+//   ],
+//   "rewrites": [
+//     {
+//       "source": "/api/(.*)",
+//       "destination": "/server/Index.js"
+//     },
+//     {
+//       "source": "/(.*)",
+//       "destination": "/client/index.html"
+//     }
+//   ]
+// }
