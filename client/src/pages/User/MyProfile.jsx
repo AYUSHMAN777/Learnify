@@ -67,7 +67,7 @@ const MyProfile = () => {
     };
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-24 dark:bg-[#101828]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-24">
             <h1 className="font-bold text-3xl text-gray-800 dark:text-white text-center md:text-left mb-8">My Profile</h1>
             
             {/* Profile Section */}

@@ -24,7 +24,7 @@ const MyLearning = () => {
     const myLearningCourses = data?.user?.enrolledCourses || [];
 
     return (
-        <div className='dark:bg-[#101828] max-w-7xl mx-auto my-24 px-4 sm:px-6 lg:px-8'>
+        <div className='max-w-7xl mx-auto my-24 px-4 sm:px-6 lg:px-8'>
             <h1 className='font-bold text-3xl text-gray-800 dark:text-white mb-8'>My Learning</h1>
             <div className='my-5'>
                 {
