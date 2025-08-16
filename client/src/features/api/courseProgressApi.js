@@ -8,7 +8,7 @@ export const courseProgressApi = createApi({
     reducerPath: 'courseProgressApi',
     tagTypes: ['CourseProgress'], // A specific tag for progress data
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/api/progress', // Assuming your progress routes are under /api/progress
+        baseUrl: 'https://learnify-1-sb4f.onrender.com/api/progress', // Assuming your progress routes are under /api/progress
         credentials: 'include',
     }),
     endpoints: (builder) => ({

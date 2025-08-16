@@ -19,8 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   origin: [
-    'http://localhost:5173',
-    'https://learnify-ecru.vercel.app'
+    'https://learnify-1-sb4f.onrender.com'
   ],
   credentials: true,
 }));

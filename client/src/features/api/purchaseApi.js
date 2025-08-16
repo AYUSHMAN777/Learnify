@@ -4,7 +4,7 @@ export const purchaseApi = createApi({
     reducerPath: 'purchaseApi',
     tagTypes: ['PurchasedCourses'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/api/purchase',
+        baseUrl: 'https://learnify-1-sb4f.onrender.com/api/purchase',
         credentials: 'include',
     }),
     endpoints: (builder) => ({

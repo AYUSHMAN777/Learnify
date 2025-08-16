@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const course_api = 'http://localhost:5000/api/course';
+const course_api = 'https://learnify-1-sb4f.onrender.com/api/course';
 export const courseApi = createApi({//createApi set up connection to your backend API
     reducerPath: 'courseApi', // key in Redux store
     tagTypes: ['Refetch_Courses'],
