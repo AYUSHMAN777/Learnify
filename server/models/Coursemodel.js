@@ -27,16 +27,16 @@ const courseSchema = new Schema(
     courseLevel: {
       type: String,
       enum: ['beginner', 'intermediate', 'advanced'],
-      // required: true,
+      required: true,
     },
     coursePrice: {
       type: Number,
-      // required: true,
+      required: true,
       min: 0,
     },
     courseThumbnail: {
       type: String, // e.g., Cloudinary URL or local path
-      // required: true,
+      required: true,
     },
 
     // Relationships
