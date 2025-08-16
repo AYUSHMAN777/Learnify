@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const isAuthenticated = require('../middleware/isAuthenticated');
-const { createCheckoutSession, webhook, getAllPurchasedCourses, getCourseDetailWithPurchaseStatus } = require('../controllers/coursePurchase.controller');
+// --- FIX: Removed 'webhook' from the import as it's now handled in index.js ---
+const { createCheckoutSession, getAllPurchasedCourses, getCourseDetailWithPurchaseStatus } = require('../controllers/coursePurchase.controller');
 
+// Route to create a checkout session
 router.post('/create-checkout-session', isAuthenticated, createCheckoutSession);
-router.post('/webhook', express.raw({ type: 'application/json' }), webhook);
+
+// --- FIX: The webhook route has been removed from this file ---
+
 router.get('/course/:courseId/detail-with-status', isAuthenticated, getCourseDetailWithPurchaseStatus);
 router.get('/purchased-courses', isAuthenticated, getAllPurchasedCourses);
 
