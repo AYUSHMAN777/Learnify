@@ -1,7 +1,6 @@
 const express = require('express');
 const { uploadMedia } = require('../utils/cloudinary');
-const upload = require('../utils/multer'); 
-
+const upload = require('../utils/multer');
 
 const router = express.Router();
 
