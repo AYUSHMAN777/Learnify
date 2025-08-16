@@ -12,11 +12,9 @@ import { useDispatch } from 'react-redux';
 import { setCredentials } from '@/features/authslice';
 
 const Login = () => {
-    const [loginEmail, setLoginEmail] = useState('');
-    const [loginPassword, setLoginPassword] = useState('');
-    const [signupName, setSignupName] = useState('');
-    const [signupEmail, setSignupEmail] = useState('');
-    const [signupPassword, setSignupPassword] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -25,15 +23,15 @@ const Login = () => {
 
     const loginHandler = async (e) => {
         e.preventDefault();
-        await loginUser({ email: loginEmail, password: loginPassword });
+        await loginUser({ email, password });
     };
 
     const registerHandler = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('name', signupName);
-        formData.append('email', signupEmail);
-        formData.append('password', signupPassword);
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('password', password);
         await registerUser(formData);
     };
 
@@ -80,11 +78,11 @@ const Login = () => {
                             <form onSubmit={loginHandler} className="space-y-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="login-email" className="text-gray-300">Email</Label>
-                                    <Input id="login-email" type="email" placeholder="m@example.com" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
+                                    <Input id="login-email" type="email" placeholder="m@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="login-password" className="text-gray-300">Password</Label>
-                                    <Input id="login-password" type="password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
+                                    <Input id="login-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
                                 </div>
                                 <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={isLoginLoading}>
                                     {isLoginLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
@@ -108,15 +106,15 @@ const Login = () => {
                             <form onSubmit={registerHandler} className="space-y-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="signup-name" className="text-gray-300">Name</Label>
-                                    <Input id="signup-name" placeholder="Your Name" value={signupName} onChange={(e) => setSignupName(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
+                                    <Input id="signup-name" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="signup-email" className="text-gray-300">Email</Label>
-                                    <Input id="signup-email" type="email" placeholder="m@example.com" value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
+                                    <Input id="signup-email" type="email" placeholder="m@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="signup-password" className="text-gray-300">Password</Label>
-                                    <Input id="signup-password" type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
+                                    <Input id="signup-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-gray-800 border-gray-600 text-white" />
                                 </div>
                                 <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={isRegisterLoading}>
                                     {isRegisterLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
