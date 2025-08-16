@@ -74,15 +74,15 @@ const Login = () => {
 
   }, [LoginIsLoading, RegisterIsLoading, LoginData, RegisterData, LoginError, RegisterError]);
   return (
-    <div className="min-h-screen flex items-center justify-center dark:bg-[#101828]">
-      <div className="w-full max-w-sm flex flex-col gap-6 mt-5 ">
-        <Tabs defaultValue="signup" className="dark:bg-[#101828]">
+    <div className="min-h-screen flex items-center justify-center ">
+      <div className="w-full max-w-sm flex flex-col gap-6 mt-5">
+        <Tabs defaultValue="signup">
           <TabsList>
             <TabsTrigger value="signup">SignUp</TabsTrigger>
             <TabsTrigger value="login">Login</TabsTrigger>
           </TabsList>
           <TabsContent value="signup">
-            <Card className="dark:bg-[#101828]">
+            <Card>
               <CardHeader>
                 <CardTitle>SignUp</CardTitle>
                 <CardDescription>

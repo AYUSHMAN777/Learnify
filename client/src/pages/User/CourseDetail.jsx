@@ -33,7 +33,7 @@ const CourseDetail = () => {
     }
 
     return (
-        <div className="bg-gray-50 dark:bg-gray-950">
+        <div className="bg-gray-50 ">
             {/* Top Banner */}
             <div className="bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-900 dark:to-gray-900 text-white pt-24 pb-12">
                 <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col gap-3">
