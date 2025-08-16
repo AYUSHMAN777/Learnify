@@ -76,7 +76,11 @@ const CourseDetail = () => {
                                 <div key={idx} className="flex items-center justify-between p-3 border-b dark:border-gray-700 last:border-b-0">
                                     <div className="flex items-center gap-3">
                                         <span>
-                                            {lecture.isPreview === true ? (<PlayCircle className="text-blue-500" size={18} />) : (<Lock className="text-gray-500" size={18} />)}
+                                            {isPurchased || lecture.isPreview ? (
+                                                <PlayCircle className="text-blue-500" size={18} />
+                                            ) : (
+                                                <Lock className="text-gray-500" size={18} />
+                                            )}
                                         </span>
                                         <span className="font-medium dark:text-gray-200">{lecture.lectureTitle}</span>
                                     </div>
