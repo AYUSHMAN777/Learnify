@@ -23,7 +23,7 @@ const Dashboard = () => {
     const courseData = data?.chartData || [];
 
     return (
-        <div className="space-y-8 mt-15">
+        <div className="space-y-8 mt-5 md:mt-15">
             <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Dashboard</h1>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
                 {/* Total Sales Card */}
