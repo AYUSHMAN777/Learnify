@@ -177,10 +177,57 @@ const getAllPurchasedCourses = async (req, res) => {
         return res.status(500).json({ message: "Server error." });
     }
 };
+const getInstructorDashboardData = async (req, res) => {
+    try {
+        const instructorId = req.id;
+
+        // 1. Find all courses created by the instructor
+        const courses = await Course.find({ creator: instructorId });
+        if (!courses.length) {
+            return res.status(200).json({
+                success: true,
+                message: "Instructor has not created any courses yet.",
+                totalSales: 0,
+                totalRevenue: 0,
+                chartData: [],
+            });
+        }
+
+        const courseIds = courses.map(course => course._id);
+
+        // 2. Find all completed purchases for those courses
+        const purchases = await CoursePurchase.find({
+            courseId: { $in: courseIds },
+            status: 'completed'
+        }).populate('courseId', 'courseTitle coursePrice');
+
+        // 3. Calculate total sales and revenue from the 'amount' field
+        const totalSales = purchases.length;
+        const totalRevenue = purchases.reduce((acc, purchase) => acc + purchase.amount, 0);
+
+        // 4. Prepare data for the chart
+        const chartData = purchases.map(purchase => ({
+            name: purchase.courseId.courseTitle,
+            price: purchase.courseId.coursePrice,
+        }));
+
+        res.status(200).json({
+            success: true,
+            totalSales,
+            totalRevenue,
+            chartData,
+        });
+
+    } catch (error) {
+        console.error("Error fetching instructor dashboard data:", error);
+        res.status(500).json({ message: "Server error." });
+    }
+};
 
 module.exports = {
     createCheckoutSession,
     webhook,
     getCourseDetailWithPurchaseStatus,
-    getAllPurchasedCourses
+    getAllPurchasedCourses,
+    getInstructorDashboardData 
 };

@@ -15,23 +15,28 @@ export const purchaseApi = createApi({
                 body: { courseId },
             }),
         }),
-         // Query to get all courses purchased by the user
+        // Query to get all courses purchased by the user
         getAllPurchasedCourses: builder.query({
             query: () => '/purchased-courses', // This matches the route in purchase.route.js
-            method:'GET',
+            method: 'GET',
             providesTags: ['PurchasedCourses'],
         }),
-        
+
         // Query to get a single course with its purchase status
         getCourseDetailWithPurchaseStatus: builder.query({
             query: (courseId) => `/course/${courseId}/detail-with-status`, // Matches the route in purchase.route.js
-            method:'GET',
-            
+            method: 'GET',
+
             providesTags: (result, error, courseId) => [{ type: 'PurchasedCourses', id: courseId }],
         }),
-          
+        // Add this new endpoint inside the endpoints builder
+        getInstructorDashboardData: builder.query({
+            query: () => '/instructor-dashboard',
+            providesTags: ['PurchasedCourses'],
+        }),
+
     }),
 });
 
-export const { useCreateCheckoutSessionMutation, useGetAllPurchasedCoursesQuery, useGetCourseDetailWithPurchaseStatusQuery } = purchaseApi;
+export const { useCreateCheckoutSessionMutation, useGetAllPurchasedCoursesQuery, useGetCourseDetailWithPurchaseStatusQuery, useGetInstructorDashboardDataQuery } = purchaseApi;
 // export default purchaseApi.reducer;
